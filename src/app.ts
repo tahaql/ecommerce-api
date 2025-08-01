@@ -3,6 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { config } from 'dotenv';
+import authRoutes from './routes/auth.routes';
+
 
 config();
 
@@ -44,5 +46,9 @@ app.get('/health', (req: Request, res: Response) => {
     uptime: process.uptime()
   });
 });
+
+//Auth Rout
+app.use('/api/auth', authRoutes);
+
 
 export default app;
