@@ -3,10 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { config } from 'dotenv';
-import authRoutes from './routes/auth.routes';
-import productRoutes from './routes/product.routes';
-import categoryRoutes from './routes/category.routes';
-
+// Import routes
+import authRoutes from './routes/authRoutes';
 
 config();
 
@@ -31,12 +29,19 @@ app.use(express.urlencoded({ extended: true }));
 // Static Files
 app.use('/uploads', express.static('uploads'));
 
+// Routes
+app.use('/api/auth', authRoutes);
+
 // Basic Route
 app.get('/', (req: Request, res: Response) => {
   res.json({
     message: 'E-commerce API Server',
     version: '1.0.0',
-    status: 'active'
+    status: 'active',
+    endpoints: {
+      auth: '/api/auth',
+      health: '/health'
+    }
   });
 });
 
@@ -49,14 +54,13 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-//Auth Rout
-app.use('/api/auth', authRoutes);
-
-//Products Rout
-app.use('/api/products', productRoutes);
-
-//Categories Rout
-app.use('/api/categories', categoryRoutes);
-
+// 404 Handler 
+app.use((req: Request, res: Response) => {
+  res.status(404).json({
+    success: false,
+    message: 'Route not found',
+    path: req.originalUrl
+  });
+});
 
 export default app;
