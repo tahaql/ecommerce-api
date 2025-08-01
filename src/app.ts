@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { config } from 'dotenv';
 import authRoutes from './routes/auth.routes';
+import productRoutes from './routes/product.routes';
+import categoryRoutes from './routes/category.routes';
 
 
 config();
@@ -49,6 +51,12 @@ app.get('/health', (req: Request, res: Response) => {
 
 //Auth Rout
 app.use('/api/auth', authRoutes);
+
+//Products Rout
+app.use('/api/products', productRoutes);
+
+//Categories Rout
+app.use('/api/categories', categoryRoutes);
 
 
 export default app;
