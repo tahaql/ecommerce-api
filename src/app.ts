@@ -9,6 +9,7 @@ import path from 'path';
 import authRoutes from './routes/authRoutes';
 import categoryRoutes from './routes/categoryRoutes';
 import productRoutes from './routes/productRoutes';
+import cartRoutes from './routes/cartRoutes';
 
 config();
 
@@ -44,6 +45,7 @@ if (!fs.existsSync(uploadsDir)) {
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 // Basic Route
 app.get('/', (req: Request, res: Response) => {
@@ -55,6 +57,7 @@ app.get('/', (req: Request, res: Response) => {
       auth: '/api/auth',
       categories: '/api/categories',
       products: '/api/products',
+      cart: '/api/cart',
       health: '/health'
     }
   });
